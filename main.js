@@ -58,6 +58,7 @@ function removeFromFavorites(imdbID) {
         favorites.splice(index, 1);
     }
     displayFavorites();
+    saveFavorites();
 }
 
 function addToFavorites(imdbID) {
@@ -66,37 +67,10 @@ function addToFavorites(imdbID) {
     const movie = movieById[imdbID];
     favorites.push(movie);
     displayFavorites();
+    saveFavorites();
 }
 
 const movieById = {};
-
-function displayMovieFavorite(movie) {
-    return `
-    <h2>${movie.Title}</h2>
-    <button onclick="removeFromFavorites('${movie.imdbID}')">Remove from Favorites</button>
-    <p><strong>Year:</strong> ${movie.Year}</p>
-    <p><strong>Type:</strong> ${movie.Type}</p>
-    <p><strong>Writer:</strong> ${movie.Writer}</p>
-    <img src="${movie.Poster}" alt="${movie.Title}" style="width: 200px; height: auto;">`
-}
-
-function displayMovieSearchResult(movie) {
-    movieById[movie.imdbID] = movie;
-    const inFavorites = favorites.some(fav => fav.imdbID === movie.imdbID);
-
-    let addToFavoritesButton = `<button onclick="addToFavorites('${movie.imdbID}')">Add to Favorites</button>`;
-    if (inFavorites) {
-        addToFavoritesButton = `Already in Favorites`;
-    }
-
-    return `
-    <h2>${movie.Title}</h2>
-    ${addToFavoritesButton}
-    <p><strong>Year:</strong> ${movie.Year}</p>
-    <p><strong>Type:</strong> ${movie.Type}</p>
-    <p><strong>Writer:</strong> ${movie.Writer}</p>
-    <img src="${movie.Poster}" alt="${movie.Title}" style="width: 200px; height: auto;">`
-}
 
 function displayMovieDetails(movie) {
     return `
@@ -119,7 +93,51 @@ function displayFavorites() {
     document.getElementById('favorites').innerHTML = result;
 }
 
+
+function displayMovieFavorite(movie) {
+    return `
+    <div class="movie-card">
+        <img src="${movie.Poster}" alt="${movie.Title}">
+        <div class="movie-info">
+            <div class="movie-title">${movie.Title}</div>
+            <div class="movie-year">${movie.Year}</div>
+            <button onclick="removeFromFavorites('${movie.imdbID}')">Remove</button>
+        </div>
+    </div>`;
+}
+
+function displayMovieSearchResult(movie) {
+    movieById[movie.imdbID] = movie;
+    const inFavorites = favorites.some(fav => fav.imdbID === movie.imdbID);
+    const actionButton = inFavorites
+        ? `<div class="already-fav">Already in Favorites</div>`
+        : `<button onclick="addToFavorites('${movie.imdbID}')">Add to Favorites</button>`;
+
+    return `
+    <div class="movie-card">
+        <img src="${movie.Poster}" alt="${movie.Title}">
+        <div class="movie-info">
+            <div class="movie-title">${movie.Title}</div>
+            <div class="movie-year">${movie.Year}</div>
+            ${actionButton}
+        </div>
+    </div>`;
+}
+
+function loadFavorites() {
+    const storedFavorites = localStorage.getItem('favorites');
+    favorites.splice(0, favorites.length); // Clear the current favorites array
+    if (storedFavorites) {
+        favorites.push(...JSON.parse(storedFavorites));
+    }
+}
+
+function saveFavorites() {
+    console.log('Saving favorites to localStorage:', favorites);
+    localStorage.setItem('favorites', JSON.stringify(favorites));
+}
+
 // Promise
 
-
+loadFavorites();
 displayFavorites();

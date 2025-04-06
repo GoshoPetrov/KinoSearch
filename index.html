@@ -1,26 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Kino Search</title>
   <style>
-    body { font-family: sans-serif; padding: 20px; }
-    pre { background: #f4f4f4; padding: 10px; border-radius: 5px; }
+    body {
+      font-family: sans-serif;
+      padding: 20px;
+    }
+
+    pre {
+      background: #f4f4f4;
+      padding: 10px;
+      border-radius: 5px;
+    }
   </style>
+  <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
+  <h1>Kino Search</h1>
 
-  <h1>Favorites</h1>
+  <div class="container">
+    <div class="column" id="searchSection">
+      <h2>Search</h2>
+      <div class="search-controls">
+        <input type="text" id="searchTerm" placeholder="Search..." value="alien" />
+        <button id="fetchBtn" onclick="handleSearch()">Search</button>
+      </div>
+      <div id="output">Click the button to fetch JSON...</div>
+    </div>
 
-  <div id="favorites"></div>
-
-  <h1>Search</h1>
-
-  <input type="text" id="searchTerm" placeholder="Search..." value="alien" />
-  <button id="fetchBtn" onclick="handleSearch()">Search</button>
-  <div id="output">Click the button to fetch JSON...</div>
-
+    <div class="column" id="favoritesSection">
+      <h2>Favorites</h2>
+      <div id="favorites"></div>
+    </div>
+  </div>
 
   <script src="main.js" type="text/javascript"></script>
 </body>
+
 </html>
