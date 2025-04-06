@@ -2,28 +2,25 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Fetch Example</title>
+  <title>Kino Search</title>
   <style>
     body { font-family: sans-serif; padding: 20px; }
     pre { background: #f4f4f4; padding: 10px; border-radius: 5px; }
   </style>
 </head>
 <body>
-  <h1>Fetch JSON Demo</h1>
-  <button id="fetchBtn">Fetch Data</button>
-  <pre id="output">Click the button to fetch JSON...</pre>
 
-  <script>
-    document.getElementById('fetchBtn').addEventListener('click', () => {
-      fetch('http://www.omdbapi.com/?i=tt3896198&apikey=88870ad0')
-        .then(response => response.json())
-        .then(data => {
-          document.getElementById('output').textContent = JSON.stringify(data, null, 2);
-        })
-        .catch(error => {
-          document.getElementById('output').textContent = 'Error: ' + error;
-        });
-    });
-  </script>
+  <h1>Favorites</h1>
+
+  <div id="favorites"></div>
+
+  <h1>Search</h1>
+
+  <input type="text" id="searchTerm" placeholder="Search..." value="alien" />
+  <button id="fetchBtn" onclick="handleSearch()">Search</button>
+  <div id="output">Click the button to fetch JSON...</div>
+
+
+  <script src="main.js" type="text/javascript"></script>
 </body>
 </html>
